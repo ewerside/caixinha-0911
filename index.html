@@ -53,6 +53,26 @@ body{background-color:#ffc8e5;background-image:radial-gradient(#ff71bc 2px,trans
 .polaroid figcaption{font-size:12px;line-height:1.8;padding-top:13px;color:#2b1429;overflow-wrap:anywhere}
 @media(max-width:700px){.behind-scenes{padding:20px 16px}.behind-scenes h2{font-size:22px}.polaroids{grid-template-columns:minmax(0,1fr);gap:30px;padding:10px}.polaroid{max-width:320px;width:100%;justify-self:center}.polaroid:nth-child(2){margin-top:0}.polaroid figcaption{font-size:13px}}
 
+
+/* Legibilidade no celular, sem alterar títulos ou animações. */
+@media (max-width: 600px){
+  body{font-size:16px}
+  .site p,.intro p,.weather,.weather b,.city-report li,.polaroid figcaption,.behind-scenes .dev-stats,.section-title p,.catline small,.subtitle,.ghoul-note,.tap-hint{font-size:16px;line-height:1.7}
+  .signature{font-size:16px!important}
+  .eyebrow,.bar,.mast,.gift-top,.tag,.counter,.badge,.ghoul-seal,.hero .qualification,.gift-card .note,.footer,.boarding .route small{font-size:14px;line-height:1.65}
+  .gift-card .fine,.gift-card .doce-certificate{font-size:14px!important;line-height:1.8!important}
+  .site p,.intro p,.site li,.site figcaption,.eyebrow,.bar,.mast,.tag,.badge,.counter,.ghoul-seal,.action,.ticket{overflow-wrap:anywhere}
+  .bar>span,.mast>span,.gift-top>span,.letter>div,.ticket,.gift-card,.catline small{min-width:0;max-width:100%}
+  .bar,.mast,.gift-top{flex-wrap:wrap;gap:6px}
+  .bar span:last-child,.counter{white-space:normal}
+  .tag{max-width:calc(100% - 18px)}
+  .action{font-size:16px;line-height:1.6;white-space:normal;max-width:calc(100% - 4px)}
+  .catline small{flex:1;max-width:160px}
+  .badge{max-width:100%}
+  /* O controle segue no fluxo da página, sem ficar sobre os textos. */
+  .music{position:static;width:fit-content;margin:0 14px 14px auto;max-width:calc(100% - 28px);font-size:16px}
+  .music-play{min-width:0;overflow-wrap:anywhere;text-align:left}
+}
 </style>
 </head>
 <body class="locked">
