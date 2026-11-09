@@ -31,6 +31,7 @@ body{background-color:#ffc8e5;background-image:radial-gradient(#ff71bc 2px,trans
 .intro-inner{border-top:2px solid #ff1493}.finale{background:#ffe0f1;border-color:#251521}
 .section-title{flex-wrap:wrap}.section-title>div{min-width:0}.counter{max-width:100%}
 @media(max-width:700px){.ghoul-note{font-size:13px}.cobweb{font-size:43px}.ghoul-seal{font-size:10px}.catline{gap:9px}.catline .cat{font-size:30px}.weather .icon{font-size:24px}}
+.tiete-view{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.tiete-view>p{flex:1 1 180px;min-width:0}.tiete-view>.gif-strip{flex:0 0 100px}
 </style>
 </head>
 <body class="locked">
@@ -68,7 +69,7 @@ body{background-color:#ffc8e5;background-image:radial-gradient(#ff71bc 2px,trans
    <p class="qualification">Site desenvolvido por um profissional altamente qualificado (mentira)</p>
   </header>
  </div>
- <aside class="weather"><span class="icon" aria-hidden="true">🌧️</span><div><b>São Paulo hoje:</b><p>cinza, garoa, 100% de chance de saudade do Rio</p><p>dias até voltar pro Rio: <strong>em breve™</strong></p><div class="city-report"><p>🏭 qualidade do ar: crocante</p><p>☁️ céu cinza: 50 tons de concreto (todos feios)</p><p>🌊 vista para o Tietê: cheirinho incluso. O rio tá podre, mas nosso carinho segue intacto.</p><p>🚗 trânsito eterno: a próxima idade chega antes do próximo semáforo abrir</p><p>🌧️ garoa: o umidificador que ninguém pediu</p></div></div></aside>
+ <aside class="weather"><span class="icon" aria-hidden="true">🌧️</span><div><b>São Paulo hoje:</b><p>cinza, garoa, 100% de chance de saudade do Rio</p><p>dias até voltar pro Rio: <strong>em breve™</strong></p><div class="city-report"><p>🏭 qualidade do ar: crocante</p><p>☁️ céu cinza: 50 tons de concreto (todos feios)</p><div class="tiete-view"><p>🌊 vista para o Tietê: cheirinho incluso. O rio tá podre, mas nosso carinho segue intacto.</p><div class="gif-strip" id="tiete-gif"></div></div><p>🚗 trânsito eterno: a próxima idade chega antes do próximo semáforo abrir</p><p>🌧️ garoa: o umidificador que ninguém pediu</p></div></div></aside>
  <section class="letter window" aria-labelledby="letter-title"><div class="letter-icon" aria-hidden="true">💌</div><div><div class="eyebrow">CORREIO AFETIVO • RIO → SP</div><h2 id="letter-title">pra você, de pertinho.</h2><p id="personal-message"></p><p class="signature">com carinho (e zero noção estética),<br><strong>Ewerton ♡</strong></p></div></section>
  <section aria-labelledby="gifts-title">
   <div class="section-title"><div><div class="eyebrow">FRETE GRÁTIS DE CARINHO</div><h2 id="gifts-title">Seus presentes 🎁</h2><p>pode amassar o embrulho. eu deixo.</p></div><span class="counter" id="count" role="status">presentes abertos: 0/3</span></div>
@@ -113,12 +114,18 @@ const CONFIG = {
   mensagemPessoal: "Céu, sei que esse aniversário está bem diferente. Mudar de cidade já é difícil; ir morar sozinha pela primeira vez, ainda mais numa cidade horrorosa dessas, é coisa de gente muito corajosa. Você encarou mudança, caixas, contrato, casa vazia e tudo o mais, e ainda deu um jeito de colocar nossa filha braçuda pra malhar na cozinha. Não é pouca coisa, e eu tenho muito orgulho de você. Você não está sozinha: só está a 430 km de todos que gostam muito de você. Torço muito por você, de verdade. Que esse ano te traga emprego, dinheiro, paz, saúde, muita Monster High e mais Rio de Janeiro, menos São Paulo. Feliz aniversário!",
   gifs: [
     "https://media.giphy.com/media/ngFjETBqVQKbK/giphy.gif",
+    "https://media.giphy.com/media/13T6KDVSWfeW7C/giphy.gif",
     "https://media.giphy.com/media/Q7wm3BKg83Sjeebd9Q/giphy.gif",
+    "https://media.giphy.com/media/Hv9Cvb0yMu3VcX8Zxl/giphy.gif",
     "https://media.giphy.com/media/E6h7uDtoFrqpdS8O4P/giphy.gif",
+    "https://media.giphy.com/media/JbMQaIA2fuw36/giphy.gif",
     "https://media.giphy.com/media/Z9jh7tAeMzrjMGxAfQ/giphy.gif",
+    "https://media.giphy.com/media/OY99Eq7nNg9qw/giphy.gif",
     "https://media.giphy.com/media/xKyQhBBQdqcOxQQWSs/giphy.gif",
+    "https://media.giphy.com/media/11VkBo73zfYStO/giphy.gif",
     "https://media.giphy.com/media/QYISFMxIRxJvFEFXI7/giphy.gif"
-  ] // Se algum GIF falhar, ele será substituído por um emoji.
+  ], // Gatinhos e Monster High alternados. Falhas viram emoji.
+  gifTiete: "https://media.giphy.com/media/1ChqQDtW4AEw0/giphy.gif" // Reação à vista para o Tietê.
 };
 const $ = id => document.getElementById(id);
 const audio = $("musica");
@@ -156,11 +163,16 @@ const phone=String(CONFIG.whatsapp).trim();
 if(/^55\d{10,11}$/.test(phone)){
   [["redeem-money","Quero resgatar meu vale de R$ 200!"],["redeem-hangout","Quero resgatar meu vale de rolê on-line!"]].forEach(([id,message])=>{$(id).href=whatsappUrl(phone,message);$(id).hidden=false;});
 }
+function appendGif(url, container, description, loading="lazy"){
+  const img=document.createElement("img");img.alt=description;img.loading=loading;img.decoding="async";img.referrerPolicy="no-referrer";
+  img.addEventListener("error",()=>{const fallback=document.createElement("span");fallback.textContent="🐈 🎈";fallback.setAttribute("aria-label",description);img.replaceWith(fallback);});
+  img.src=url;container.append(img);
+}
 CONFIG.gifs.forEach((url,index)=>{
-  const img=document.createElement("img"); img.alt="Gatinho em festa "+(index+1);img.loading=index===0?"eager":"lazy";img.decoding="async";img.referrerPolicy="no-referrer";
-  img.addEventListener("error",()=>{const fallback=document.createElement("span");fallback.textContent="🐈 🎈";fallback.setAttribute("aria-label","Gatinho em festa");img.replaceWith(fallback);});
-  img.src=url;$("gifs").append(img);
+  const description=index%2===0?"Gatinho em festa":"Monster High em festa";
+  appendGif(url,$("gifs"),description,index===0?"eager":"lazy");
 });
+appendGif(CONFIG.gifTiete,$("tiete-gif"),"Reação assustada de Monster High à vista para o Tietê");
 // Confete nativo: sem dependências, funciona mesmo sem CDN ou conexão.
 function celebrate(amount=35, cats=false, originElement=null){
   if(reduced)return;
