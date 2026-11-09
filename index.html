@@ -125,9 +125,9 @@ body.cookie-visible{overflow:hidden}.cookie-visible .site{height:calc(100dvh - v
   <h2 id="behind-title">Bastidores do desenvolvimento 🐾</h2>
   <p class="dev-stats"><span class="badge">Dev Sênior de Patas Pesadas</span><br>horas de sono durante o projeto: <strong>22 por dia</strong></p>
   <div class="polaroids">
-   <figure class="polaroid" hidden><img src="doce-1.jpg" alt="Doce de pertinho, encarando a tela do notebook" loading="lazy" decoding="async"><figcaption>Doce revisando o código. Achou 3 bugs e comeu 2.</figcaption></figure>
-   <figure class="polaroid" hidden><img src="doce-2.jpg" alt="Doce deitada na frente do notebook" loading="lazy" decoding="async"><figcaption>Deploy em produção. Por favor, não acorde a desenvolvedora.</figcaption></figure>
-   <figure class="polaroid" hidden><img src="doce-3.jpg" alt="Doce junto ao notebook com uma imagem rosa na tela" loading="lazy" decoding="async"><figcaption>Pesquisa de referência em Monster High. Trabalho exaustivo.</figcaption></figure>
+   <figure class="polaroid"><img src="doce-1.jpg" width="688" height="913" alt="Doce de pertinho, encarando a tela do notebook" loading="lazy" decoding="async"><figcaption>Doce revisando o código. Achou 3 bugs e comeu 2.</figcaption></figure>
+   <figure class="polaroid"><img src="doce-2.jpg" width="800" height="602" alt="Doce deitada na frente do notebook" loading="lazy" decoding="async"><figcaption>Deploy em produção. Por favor, não acorde a desenvolvedora.</figcaption></figure>
+   <figure class="polaroid"><img src="doce-3.jpg" width="688" height="913" alt="Doce junto ao notebook com uma imagem rosa na tela" loading="lazy" decoding="async"><figcaption>Pesquisa de referência em Monster High. Trabalho exaustivo.</figcaption></figure>
   </div>
  </section>
  <section class="guestbook"><span class="sparkle" aria-hidden="true">✧</span> <button class="action secondary" id="guest" aria-expanded="false" aria-controls="guest-message">✍️ assine meu livro de visitas</button> <span class="sparkle" aria-hidden="true">✧</span><p id="guest-message" role="status" hidden>Assinatura registrada telepaticamente! ✨ A webmaster agradece. A caneta virtual foi parar debaixo do sofá. — Doce, a Braçuda, suporte técnico de quatro patas</p></section>
@@ -220,18 +220,9 @@ CONFIG.gifs.forEach((url,index)=>{
   appendGif(url,$("gifs"),description,index===0?"eager":"lazy");
 });
 appendGif(CONFIG.gifTiete,$("tiete-gif"),"Reação assustada de Monster High à vista para o Tietê");
-// Cada polaroid só aparece quando a foto estiver disponível e carregada.
+// Fotos reais, carregadas só perto da tela. Uma falha oculta só aquela polaroid.
 document.querySelectorAll(".polaroid img").forEach(img=>{
-  const show=()=>{if(img.naturalWidth>0)img.closest(".polaroid").hidden=false;};
-  img.addEventListener("load",show);
   img.addEventListener("error",()=>{img.closest(".polaroid").hidden=true;});
-  // eager é necessário para disparar o lazy loading de uma figura oculta.
-  // O observador só libera o download quando os bastidores chegam perto da tela.
-  if("IntersectionObserver" in window){
-    const observer=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting)){img.loading="eager";observer.disconnect();}}, {rootMargin:"300px"});
-    observer.observe(document.querySelector(".behind-scenes"));
-  }else{img.closest(".polaroid").hidden=false;}
-  if(img.complete)show();
 });
 // Confete nativo: sem dependências, funciona mesmo sem CDN ou conexão.
 function celebrate(amount=35, cats=false, originElement=null){
