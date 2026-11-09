@@ -46,12 +46,12 @@
  <aside class="weather"><span class="icon" aria-hidden="true">🌧️</span><div><b>São Paulo hoje:</b><p>cinza, garoa, 100% de chance de saudade do Rio</p><p>dias até voltar pro Rio: <strong>em breve™</strong></p></div></aside>
  <section class="letter window" aria-labelledby="letter-title"><div class="letter-icon" aria-hidden="true">💌</div><div><div class="eyebrow">CORREIO AFETIVO • RIO → SP</div><h2 id="letter-title">pra você, de pertinho.</h2><p id="personal-message"></p><p class="signature">com carinho (e zero noção estética),<br><strong>Ewerton ♡</strong></p></div></section>
  <section aria-labelledby="gifts-title">
-  <div class="section-title"><div><div class="eyebrow">FRETE GRÁTIS DE CARINHO</div><h2 id="gifts-title">Seus presentes 🎁</h2><p>pode amassar o embrulho. eu deixo.</p></div><span class="counter" id="count" role="status">abertos: 0/3</span></div>
+  <div class="section-title"><div><div class="eyebrow">FRETE GRÁTIS DE CARINHO</div><h2 id="gifts-title">Seus presentes 🎁</h2><p>pode amassar o embrulho. eu deixo.</p></div><span class="counter" id="count" role="status">presentes abertos: 0/3</span></div>
   <div class="gift-grid">
    <article class="gift" data-gift="1">
     <div class="gift-top"><span>01 / OPERAÇÃO APÊ</span><span class="gift-status">♥</span></div>
     <button class="gift-open" aria-label="Abrir presente 1: a caixinha secreta" aria-expanded="false" aria-controls="card1"><span class="tag">abre essa primeiro ↘</span><span class="parcel" aria-hidden="true"><span class="box-body"></span><span class="lid"></span><span class="bow"></span></span><span class="tap-hint">toque pra desembrulhar ✨</span></button>
-    <div class="gift-card" id="card1" hidden tabindex="-1"><span class="big-icon" aria-hidden="true">🕵️‍♀️📦</span><h3>A caixinha secreta</h3><p>Tem um presente físico escondido aí no seu apartamento. Sim, temos um esquema internacional Rio–SP de contrabando de carinho.</p><p><strong>Sua pista:</strong></p><p class="clue" id="clue"></p><button class="action secondary" id="giveup" aria-expanded="false" aria-controls="location">tá, desisto, me fala onde</button><p class="location" id="location" hidden></p><p class="note">não repara, é humilde, mas foi escolhido com muito cuidado ♡</p><button class="action" id="found" aria-expanded="false" aria-controls="contents">achei! 🎉</button><div class="found-content" id="contents" hidden><h3>Dentro dessa caixinha…</h3><p>🕯️ Uma essência para fazer velas com o cheiro de <strong id="aroma"></strong>, aquele que você adora e que traz nostalgia. Um pouquinho de aconchego pra casa nova.</p><p id="memory" hidden></p><p>♡ Um cordão.</p><p>Esse cordão é só seu, e usar ou não é escolha 100% sua. Pode usar onde quiser, quando quiser, ou nunca. Se quiser uma sugestão minha: eu usaria em consultas e exames. Mas quem decide é você.</p></div></div>
+    <div class="gift-card" id="card1" hidden tabindex="-1"><span class="big-icon" aria-hidden="true">🕵️‍♀️📦</span><h3>A caixinha secreta</h3><p id="treasure-story"></p><p><strong>🐈 Doce, a guardiã do tesouro</strong></p><div id="clues" aria-live="polite"><p class="clue" id="clue1" hidden></p><p class="clue" id="clue2" hidden></p><p class="clue" id="clue3" hidden></p></div><button class="action" id="next-clue" aria-controls="clues">outra pista 🔎</button><button class="action secondary" id="giveup" aria-expanded="false" aria-controls="location">tá, desisto, me fala onde</button><p class="location" id="location" hidden></p><p class="note">não repara, é humilde, mas foi escolhido com muito cuidado ♡</p><button class="action" id="found" aria-expanded="false" aria-controls="contents">achei! 🎉</button><div class="found-content" id="contents" hidden><h3>Dentro dessa caixinha…</h3><p>🕯️ Uma essência para fazer velas com o cheiro de <strong id="aroma"></strong>, aquele que você adora e que traz nostalgia. Um pouquinho de aconchego pra casa nova.</p><p id="memory" hidden></p><p>♡ Um cordão.</p><p>Esse cordão é só seu, e usar ou não é escolha 100% sua. Pode usar onde quiser, quando quiser, ou nunca. Se quiser uma sugestão minha: eu usaria em consultas e exames. Mas quem decide é você.</p></div></div>
    </article>
    <article class="gift" data-gift="2">
     <div class="gift-top"><span>02 / PATROCÍNIO DO LAR</span><span class="gift-status">♥</span></div>
@@ -75,18 +75,30 @@
    Mantenha as aspas. O site funciona mesmo com WhatsApp e gifs vazios.
    Mensagem abaixo: provisória, escrita para você trocar se quiser. */
 const CONFIG = {
-  pistaEsconderijo: "[PISTA AQUI] Dica provisória: está no seu apê. Eu sei, fui extremamente útil. 🕵️",
-  localEsconderijo: "[LOCAL AQUI]",
-  nomeAroma: "[AROMA AQUI]",
-  memoriaAroma: "", // Opcional: uma lembrança de vocês ligada ao aroma.
-  whatsapp: "", // Só dígitos: 55 + DDD + número. Vazio = esconder Resgatar.
+  historiaEsconderijo: "Era uma vez uma caixinha contrabandeada por um carioca para território inimigo (São Paulo). Ela precisava de um esconderijo seguro, vigiado por uma guardiã felina de alta performance, que sobe lá todo dia para comer, beber água e malhar.",
+  pistasEsconderijo: [ // Reveladas uma por vez, pelo botão outra pista.
+    "Fica num lugar onde tem comida, mas não é a geladeira.",
+    "É alto. Tão alto que até a Doce precisa fazer academia para chegar perto.",
+    "Está escondida atrás de uma marmita muito chique, do Chuchu Beleza."
+  ],
+  localEsconderijo: "No armário da cozinha, prateleira de cima, atrás da bolsa de marmita do Chuchu Beleza, bem em cima do restaurante-academia da Doce. Peça licença para ela antes de mexer.",
+  nomeAroma: "Floresta de Inverno",
+  memoriaAroma: "aquele cheiro que lembra Natal e dá nostalgia em nós dois", // Opcional: uma lembrança de vocês ligada ao aroma.
+  whatsapp: "5521995020427", // Só dígitos: 55 + DDD + número. Vazio = esconder Resgatar.
   mensagemPessoal: "Céu, feliz aniversário! Sei que esse primeiro aniversário no apê novo, longe de todo mundo, pode dar uma saudade esquisita. Mas morar sozinha não significa estar sozinha, tá? Eu continuo aqui: pra ouvir suas histórias, rir de qualquer besteira e reclamar de SP com você (com moderação, porque a cidade já tem problemas suficientes). Que essa casa fique cheia de coisas com a sua cara e esse ano te traga um monte de motivos pra sorrir. Você merece. ♡",
-  gifs: [] // Cole URLs entre aspas, separadas por vírgulas. Ex.: ["https://…/gatinho.gif"]
+  gifs: [
+    "https://media.giphy.com/media/ngFjETBqVQKbK/giphy.gif",
+    "https://media.giphy.com/media/Q7wm3BKg83Sjeebd9Q/giphy.gif",
+    "https://media.giphy.com/media/E6h7uDtoFrqpdS8O4P/giphy.gif",
+    "https://media.giphy.com/media/Z9jh7tAeMzrjMGxAfQ/giphy.gif",
+    "https://media.giphy.com/media/xKyQhBBQdqcOxQQWSs/giphy.gif",
+    "https://media.giphy.com/media/QYISFMxIRxJvFEFXI7/giphy.gif"
+  ] // Se algum GIF falhar, ele será substituído por um emoji.
 };
 const $ = id => document.getElementById(id);
 const audio = $("musica");
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-let soundFailed = false, userPaused = false, entered = false, firstTouch = false, opened = new Set(), busy = false;
+let soundFailed = false, userPaused = false, entered = false, firstTouch = false, opened = new Set(), clueIndex = 0;
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 function updateMusic(){
   $("music-toggle").textContent = soundFailed ? "🎵 São Paulo • sem áudio" : audio.paused ? "🎵 tocar: São Paulo" : "🎵 tocando agora: São Paulo";
@@ -100,10 +112,17 @@ audio.addEventListener("error",()=>{soundFailed=true;$("music-toggle").hidden=tr
 audio.addEventListener("play",updateMusic); audio.addEventListener("pause",updateMusic);
 $("music-toggle").addEventListener("click",()=>{if(audio.paused){userPaused=false;playMusic();}else{userPaused=true;audio.pause();}updateMusic();});
 document.addEventListener("pointerdown",event=>{if(!firstTouch && !event.target.closest("#music-toggle")){firstTouch=true;playMusic();}},{passive:true});
-// L'essai automatique peut être bloqué sur mobile : le clic d'ouverture réessaie.
+// O autoplay pode ser bloqueado no celular; o clique de abertura tenta de novo.
 playMusic();
 $("personal-message").textContent = CONFIG.mensagemPessoal;
-$("clue").textContent = CONFIG.pistaEsconderijo;
+$("treasure-story").textContent = CONFIG.historiaEsconderijo;
+CONFIG.pistasEsconderijo.forEach((pista,index)=>{$("clue"+(index+1)).textContent="Pista "+(index+1)+": "+pista;});
+$("next-clue").addEventListener("click",()=>{
+  if(clueIndex>=CONFIG.pistasEsconderijo.length)return;
+  clueIndex++;
+  $("clue"+clueIndex).hidden=false;
+  if(clueIndex===CONFIG.pistasEsconderijo.length)$("next-clue").hidden=true;
+});
 $("location").textContent = "📍 " + CONFIG.localEsconderijo;
 $("aroma").textContent = CONFIG.nomeAroma;
 if(CONFIG.memoriaAroma.trim()){ $("memory").textContent=CONFIG.memoriaAroma; $("memory").hidden=false; }
@@ -113,7 +132,7 @@ if(/^55\d{10,11}$/.test(phone)){
   [["redeem-money","Quero resgatar meu vale de R$ 200!"],["redeem-hangout","Quero resgatar meu vale de rolê on-line!"]].forEach(([id,message])=>{$(id).href=whatsappUrl(phone,message);$(id).hidden=false;});
 }
 CONFIG.gifs.forEach((url,index)=>{
-  const img=document.createElement("img"); img.alt="Gatinho em festa "+(index+1);img.loading="lazy";img.decoding="async";img.referrerPolicy="no-referrer";
+  const img=document.createElement("img"); img.alt="Gatinho em festa "+(index+1);img.loading=index===0?"eager":"lazy";img.decoding="async";img.referrerPolicy="no-referrer";
   img.addEventListener("error",()=>{const fallback=document.createElement("span");fallback.textContent="🐈 🎈";fallback.setAttribute("aria-label","Gatinho em festa");img.replaceWith(fallback);});
   img.src=url;$("gifs").append(img);
 });
@@ -143,12 +162,13 @@ document.querySelectorAll(".gift-open").forEach(button=>button.addEventListener(
   const card=$("card"+id);card.hidden=false;gift.querySelector(".gift-status").textContent="ABERTO ✓";opened.add(id);$("count").textContent="presentes abertos: "+opened.size+"/3";card.focus({preventScroll:true});
   if(opened.size===3){await delay(reduced?0:600);$("finale").hidden=false;celebrate(85);celebrate(24,true);}
 }));
-$("giveup").addEventListener("click",()=>{$("location").hidden=false;$("giveup").hidden=true;$("giveup").setAttribute("aria-expanded","true");});
+$("giveup").addEventListener("click",()=>{$("next-clue").hidden=true;$("location").hidden=false;$("giveup").hidden=true;$("giveup").setAttribute("aria-expanded","true");});
 $("found").addEventListener("click",()=>{$("contents").hidden=false;$("found").textContent="achou! missão cumprida ✓";$("found").setAttribute("aria-expanded","true");$("found").disabled=true;celebrate(55,false,$("found"));});
 $("guest").addEventListener("click",()=>{$("guest-message").hidden=false;$("guest").setAttribute("aria-expanded","true");});
 $("replay").addEventListener("click",()=>{
   opened.clear();$("count").textContent="presentes abertos: 0/3";$("finale").hidden=true;
   document.querySelectorAll(".gift").forEach(gift=>{gift.classList.remove("opened","opening");const button=gift.querySelector(".gift-open");button.disabled=false;button.setAttribute("aria-expanded","false");gift.querySelector(".gift-card").hidden=true;gift.querySelector(".gift-status").textContent="♥";});
+  clueIndex=0;$("next-clue").hidden=false;CONFIG.pistasEsconderijo.forEach((_,index)=>{$("clue"+(index+1)).hidden=true;});
   $("contents").hidden=true;$("location").hidden=true;$("giveup").hidden=false;$("giveup").setAttribute("aria-expanded","false");$("found").disabled=false;$("found").textContent="achei! 🎉";$("found").setAttribute("aria-expanded","false");
   $("gifts-title").scrollIntoView({behavior:reduced?"instant":"smooth",block:"start"});document.querySelector(".gift-open").focus({preventScroll:true});
 });
