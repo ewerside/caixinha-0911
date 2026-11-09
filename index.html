@@ -53,6 +53,13 @@ body{background-color:#ffc8e5;background-image:radial-gradient(#ff71bc 2px,trans
 .polaroid img{display:block;width:100%;height:auto;max-height:360px;object-fit:contain;background:#f7e9f1}
 .polaroid figcaption{font-size:12px;line-height:1.8;padding-top:13px;color:#2b1429;overflow-wrap:anywhere}
 @media(max-width:700px){.behind-scenes{padding:20px 16px}.behind-scenes h2{font-size:22px}.polaroids{grid-template-columns:minmax(0,1fr);gap:30px;padding:10px}.polaroid{max-width:320px;width:100%;justify-self:center}.polaroid:nth-child(2){margin-top:0}.polaroid figcaption{font-size:13px}}
+
+.cookie-banner{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);width:min(620px,calc(100% - 24px));z-index:35;padding:11px 13px;background:#fff1c5;color:#2b1429;border:2px solid #251521;box-shadow:3px 3px 0 #ff1493;font-size:11px;line-height:1.5;max-height:35dvh;overflow:auto}
+.cookie-banner p{margin:0 0 8px}.cookie-actions{display:flex;flex-wrap:wrap;gap:8px}.cookie-actions button{font:700 11px "Comic Sans MS",cursive;padding:8px 10px;min-height:40px;border:1px solid #251521;background:#ffd2ea;color:#2b1429;cursor:pointer}
+.cookie-policy{display:block;font:10px/1.5 monospace;text-decoration:underline;color:#694054;background:none;border:0;padding:8px 0 0;text-align:left;cursor:pointer}
+/* Espaço próprio para o aviso e a música: nenhum cobre os presentes. */
+body.cookie-visible{overflow:hidden}.cookie-visible .site{height:calc(100dvh - var(--cookie-space,190px) - 66px);overflow-y:auto;overscroll-behavior:contain;scroll-padding:14px;padding-bottom:20px}
+.cookie-visible .music{bottom:calc(var(--cookie-space,190px) + 12px)}
 </style>
 </head>
 <body class="locked">
@@ -90,7 +97,7 @@ body{background-color:#ffc8e5;background-image:radial-gradient(#ff71bc 2px,trans
    <p class="qualification">Site desenvolvido por Doce, a Braçuda, webmaster autodidata.<br>Participação especial: Ewer (só a mensagem).<br>Digitado com patas de caminhoneiro. Desculpe os erros, teclado pequeno pra esse bração.</p>
   </header>
  </div>
- <aside class="weather"><span class="icon" aria-hidden="true">🌧️</span><div class="weather-content"><b>São Paulo hoje:</b><p>100% de chance de saudade do Rio</p><p>dias até voltar pro Rio: <strong>em breve™</strong></p><ul class="city-report"><li>Previsão: as 4 estações do ano, hoje, até as 18h.</li><li>Praia mais próxima: o shopping.</li><li>Mar: a Marginal Tietê (não recomendamos o mergulho).</li><li>Céu: modelo Cinza Paulistano, sem opção de azul.</li><li>Qualidade do ar: dá pra mastigar.</li><li>Trânsito: você sai de casa com 25 anos e chega no trabalho com 26.</li><li>Aqui se chama 'bolacha'. Estamos trabalhando para corrigir isso.</li><li>Domingo no Ibirapuera: a praia possível.</li></ul><div class="gif-strip weather-reaction" id="tiete-gif"></div></div></aside>
+ <aside class="weather"><span class="icon" aria-hidden="true">🌧️</span><div class="weather-content"><b>São Paulo hoje:</b><p>100% de chance de saudade do Rio</p><p>dias até voltar pro Rio: <strong>em breve™</strong></p><ul class="city-report"><li>Previsão: as 4 estações do ano, hoje, até as 18h.</li><li>Praia mais próxima: o shopping.</li><li>Mar: a Marginal Tietê (não recomendamos o mergulho).</li><li>Céu: modelo Cinza Paulistano, sem opção de azul.</li><li>Qualidade do ar: dá pra mastigar.</li><li>Trânsito: você sai de casa com 25 anos e chega no trabalho com 26.</li><li>Domingo no Ibirapuera: a praia possível.</li></ul><div class="gif-strip weather-reaction" id="tiete-gif"></div></div></aside>
  <section class="letter window" aria-labelledby="letter-title"><div class="letter-icon" aria-hidden="true">📝</div><div><div class="eyebrow">MENSAGEM DO EWER • RIO → SP</div><h2 id="letter-title">um recado do Ewer.</h2><p id="personal-message"></p><p class="signature">— <strong>Ewer</strong></p></div></section>
  <section aria-labelledby="gifts-title">
   <div class="section-title"><div><div class="eyebrow">ENTREGA ESPECIAL DA WEBMASTER</div><h2 id="gifts-title">Seus presentes 🎁</h2><p>pode amassar o embrulho. eu brinco com ele depois.</p></div><span class="counter" id="count" role="status">presentes abertos: 0/3</span></div>
@@ -127,6 +134,11 @@ body{background-color:#ffc8e5;background-image:radial-gradient(#ff71bc 2px,trans
  <footer class="footer"><p>você é a visitante nº <span class="visitor">000001</span><br>(e a mais importante, claramente)</p><div class="badges"><span class="badge">🌐 melhor visualizado no Internet Explorer 6</span><span class="badge">Webmaster: Doce 🐾</span><span class="badge">🐾 100% digitado com patas de caminhoneiro</span><span class="badge">💀🎀 monstramente aprovada</span><span class="badge">🏋️ Doce, a Braçuda • Personal Trainer</span></div><p>site hospedado diretamente do Rio de Janeiro, onde o ar é respirável<br>© Doce, a Braçuda • webmaster autodidata.<br>Participação especial: Ewer (só a mensagem).<br>Nenhum bom gosto foi usado nesta página; o teclado era pequeno pra esse bração.</p></footer>
 </main>
 <div class="music" id="music-controls"><button id="music-toggle" class="music-play" type="button" aria-pressed="false">🎵 tocar: São Paulo</button><button id="music-mute" class="music-mute" type="button" aria-label="Silenciar música" aria-pressed="false">🔈</button></div>
+<aside class="cookie-banner" id="cookie-banner" aria-label="Aviso de biscoitos da Doce" hidden>
+ <p id="cookie-text" role="status">🍪 Este site usa cookies. Aqui no Rio chamamos de biscoitos; em São Paulo, de bolacha. Estamos trabalhando para corrigir isso.</p>
+ <div class="cookie-actions" id="cookie-actions"><button type="button" id="cookie-accept">Aceitar biscoitos</button><button type="button" id="cookie-reject">Recusar bolachas</button></div>
+ <button type="button" class="cookie-policy" id="cookie-policy">Política de Biscoitos (LGPD: Lei Geral de Proteção dos Biscoitos)</button>
+</aside>
 <script>
 /* EDITE AQUI: todos os campos pessoais estão reunidos neste objeto.
    Mantenha as aspas. O site funciona mesmo com WhatsApp e gifs vazios.
@@ -234,9 +246,30 @@ function celebrate(amount=35, cats=false, originElement=null){
     document.body.append(particle);setTimeout(()=>particle.remove(),4500);
   }
 }
+// Banner de brincadeira: nenhuma preferência nem dado é armazenado.
+function sizeCookieBanner(){
+  if(!$("cookie-banner").hidden)document.body.style.setProperty("--cookie-space",Math.ceil($("cookie-banner").getBoundingClientRect().height||190)+20+"px");
+}
+function showCookieBanner(){
+  $("cookie-banner").hidden=false;document.body.classList.add("cookie-visible");sizeCookieBanner();
+}
+function closeCookieBanner(){
+  const scroll=$("site").scrollTop||0;
+  $("cookie-banner").hidden=true;document.body.classList.remove("cookie-visible");
+  if(window.scrollTo)window.scrollTo({top:scroll,behavior:"instant"});
+}
+$("cookie-accept").addEventListener("click",closeCookieBanner);
+$("cookie-policy").addEventListener("click",closeCookieBanner);
+$("cookie-reject").addEventListener("click",()=>{
+  $("cookie-text").textContent="Decisão correta. Você ainda tem salvação.";
+  $("cookie-actions").hidden=true;$("cookie-policy").hidden=true;sizeCookieBanner();
+  setTimeout(closeCookieBanner,2000);
+});
+window.addEventListener?.("resize",sizeCookieBanner);
+if("ResizeObserver" in window){new ResizeObserver(sizeCookieBanner).observe($("cookie-banner"));}
 async function enter(){
   if(entered)return; entered=true;playMusic();$("site").hidden=false;document.body.classList.remove("locked");$("intro").classList.add("intro-leaving");
-  await delay(reduced?0:550);$("intro").hidden=true;celebrate(60,true);$("gifts-title").closest("section").setAttribute("aria-label","Três presentes de aniversário");
+  await delay(reduced?0:550);$("intro").hidden=true;showCookieBanner();celebrate(60,true);$("gifts-title").closest("section").setAttribute("aria-label","Três presentes de aniversário");
 }
 $("enter").addEventListener("click",enter);
 document.querySelectorAll(".gift-open").forEach(button=>button.addEventListener("click",async()=>{
